@@ -1,0 +1,48 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  labels:
+    app: srjm
+  name: srjm-gateway
+  namespace: qrcode-system
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  gatewayClassName: nginx
+  listeners:
+  - name: http
+    hostname: geradorqrcode-srjm.uk
+    port: 80
+    protocol: HTTP
+  - name: https
+    hostname: geradorqrcode-srjm.uk
+    port: 443
+    protocol: HTTPS
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: geradorqrcode-srjm.uk-tls
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  labels:
+    app: srjm
+  name: srjm-route
+  namespace: qrcode-system
+spec:
+  parentRefs:
+  - name: srjm-gateway
+    sectionName: http
+  - name: srjm-gateway
+    sectionName: https
+  hostnames:
+  - geradorqrcode-srjm.uk
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: srjm-qrcode
+      port: 3000

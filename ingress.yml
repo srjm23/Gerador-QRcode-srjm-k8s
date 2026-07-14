@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: srjm
+  name: srjm-ingress
+  namespace: qrcode-system
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - geradorqrcode-srjm.uk
+    secretName:  geradorqrcode-srjm.uk-tls
+  rules:
+  - host: geradorqrcode-srjm.uk
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: srjm-qrcode
+            port: 
+              number: 3000
