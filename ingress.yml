@@ -11,8 +11,10 @@ metadata:
     # nginx.ingress.kubernetes.io/auth-type: "basic"
     # nginx.ingress.kubernetes.io/auth-secret: "qrcode-senhas"
     # nginx.ingress.kubernetes.io/auth-realm: "Autenticacao Necessaria"
-    nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/session-cookie-name: "srjm-qrcode"
+
+    # nginx.ingress.kubernetes.io/affinity: "cookie"
+    # nginx.ingress.kubernetes.io/session-cookie-name: "srjm-qrcode"
+    nginx.ingress.kubernetes.io/upstream-hash-by: "$request_uri"
 spec:
   ingressClassName: nginx
   tls:
