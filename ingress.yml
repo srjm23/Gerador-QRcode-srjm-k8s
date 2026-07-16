@@ -6,6 +6,7 @@ metadata:
   name: srjm-ingress
   namespace: qrcode-system
   annotations:
+    nginx.ingress.kubernetes.io/limit-rps: "20"
     nginx.ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/cluster-issuer: letsencrypt-prod
     # nginx.ingress.kubernetes.io/auth-type: "basic"
@@ -15,6 +16,9 @@ metadata:
     # nginx.ingress.kubernetes.io/affinity: "cookie"
     # nginx.ingress.kubernetes.io/session-cookie-name: "srjm-qrcode"
     nginx.ingress.kubernetes.io/upstream-hash-by: "$request_uri"
+    #canary ingress
+    # nginx.ingress.kubernetes.io/canary: "true"
+    # nginx.ingress.kubernetes.io/canary-weight: "70"
 spec:
   ingressClassName: nginx
   tls:
