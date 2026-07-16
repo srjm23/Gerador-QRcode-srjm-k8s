@@ -6,8 +6,8 @@ metadata:
   name: srjm-ingress
   namespace: qrcode-system
   annotations:
-    # nginx.ingress.kubernetes.io/limit-rps: "10"
-    nginx.ingress.kubernetes.io/rate-limit: "10"
+    nginx.ingress.kubernetes.io/limit-rps: "5"
+    # nginx.ingress.kubernetes.io/rate-limit: "10"
     nginx.ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/cluster-issuer: letsencrypt-prod
     # nginx.ingress.kubernetes.io/auth-type: "basic"
