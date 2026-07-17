@@ -42,7 +42,10 @@ spec:
     tls:
       mode: Terminate
       certificateRefs:
-      - name: argocd.geradorqrcode-srjm.uk-tls
+        - group: ""
+          kind: Secret
+          name: argocd.geradorqrcode-srjm.uk-tls
+          namespace: argocd
     allowedRoutes:
       namespaces:
         from: Selector
