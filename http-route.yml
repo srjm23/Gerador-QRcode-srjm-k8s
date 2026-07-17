@@ -1,0 +1,23 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  labels:
+    app: srjm
+  name: srjm-httpRoute
+  namespace: qrcode-system
+spec:
+  parentRefs:
+  - name: srjm-gateway-nginx
+    sectionName: http
+  - name: srjm-gateway-nginx
+    sectionName: https
+  hostnames:
+  - geradorqrcode-srjm.uk
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: srjm-qrcode
+      port: 3000

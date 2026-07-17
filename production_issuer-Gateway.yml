@@ -16,6 +16,6 @@ spec:
     - http01:
         gatewayHTTPRoute:
           parentRefs:
-          - name: srjm-gateway
+          - name: srjm-gateway-nginx
             namespace: qrcode-system
             kind: Gateway
