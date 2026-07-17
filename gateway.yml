@@ -22,3 +22,30 @@ spec:
       mode: Terminate
       certificateRefs:
       - name: geradorqrcode-srjm.uk-tls
+  
+  #argoCD
+  - name: argocd-http
+    hostname: argocd.geradorqrcode-srjm.uk
+    port: 80
+    protocol: HTTP
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: allowed    
+
+  - name: argocd-https
+    hostname: argocd.geradorqrcode-srjm.uk
+    port: 443
+    protocol: HTTPS
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: argocd.geradorqrcode-srjm.uk-tls
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: allowed
