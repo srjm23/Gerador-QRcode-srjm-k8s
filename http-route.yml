@@ -3,7 +3,7 @@ kind: HTTPRoute
 metadata:
   labels:
     app: srjm
-  name: srjm-httpRoute
+  name: srjm-httproute
   namespace: qrcode-system
 spec:
   parentRefs:
