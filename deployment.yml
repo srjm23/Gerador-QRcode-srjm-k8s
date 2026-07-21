@@ -6,7 +6,6 @@ metadata:
   name: srjm-qrcode
   namespace: qrcode-system
 spec:
-  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
