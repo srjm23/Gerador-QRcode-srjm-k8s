@@ -4,18 +4,33 @@ metadata:
   name: letsencrypt-prod
 spec:
   acme:
-    # The ACME server URL
     server: https://acme-v02.api.letsencrypt.org/directory
-    # Email address used for ACME registration
     email: srjm99silva@gmail.com
-    # Name of a secret used to store the ACME account private key
+
     privateKeySecretRef:
       name: letsencrypt-prod
-    # Enable the HTTP-01 challenge provider
+
     solvers:
-    - http01:
-        gatewayHTTPRoute:
-          parentRefs:
-          - name: srjm-gateway-nginx
-            namespace: qrcode-system
-            kind: Gateway
+      - selector:
+          dnsNames:
+            - geradorqrcode-srjm.uk
+        http01:
+          gatewayHTTPRoute:
+            parentRefs:
+              - name: srjm-gateway-nginx
+                namespace: qrcode-system
+                kind: Gateway
+                group: gateway.networking.k8s.io
+                sectionName: http
+
+      - selector:
+          dnsNames:
+            - grafana.geradorqrcode-srjm.uk
+        http01:
+          gatewayHTTPRoute:
+            parentRefs:
+              - name: srjm-gateway-nginx
+                namespace: qrcode-system
+                kind: Gateway
+                group: gateway.networking.k8s.io
+                sectionName: grafana-http
