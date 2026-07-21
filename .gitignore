@@ -1,0 +1,10 @@
+# Ignore everything by default
+*
+
+!*/
+
+!.gitignore
+!*.md
+!*.MD
+!*.yaml
+!*.yml
