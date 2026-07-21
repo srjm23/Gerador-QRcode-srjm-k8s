@@ -64,3 +64,35 @@ spec:
           selector:
             matchLabels:
               gateway-access: allowed
+
+
+    # GRAFANA HTTP
+    - name: grafana-http
+      hostname: grafana.geradorqrcode-srjm.uk
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              gateway-access: allowed
+
+    # GRAFANA HTTPS
+    - name: grafana-https
+      hostname: grafana.geradorqrcode-srjm.uk
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: grafana.geradorqrcode-srjm.uk-tls
+            namespace: monitoring
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              gateway-access: allowed
