@@ -34,3 +34,15 @@ spec:
                 kind: Gateway
                 group: gateway.networking.k8s.io
                 sectionName: grafana-http
+                
+      - selector:
+          dnsNames:
+            - prometheus.geradorqrcode-srjm.uk
+        http01:
+          gatewayHTTPRoute:
+            parentRefs:
+              - name: srjm-gateway-nginx
+                namespace: qrcode-system
+                kind: Gateway
+                group: gateway.networking.k8s.io
+                sectionName: prometheus-http
