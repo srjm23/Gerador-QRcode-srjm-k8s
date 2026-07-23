@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: srjm-qrcode-servicemonitor
+  namespace: qrcode-system
+  labels:
+    app: srjm
+spec:
+  selector:
+    matchLabels:
+      app: srjm
+  endpoints:
+    - interval: 30s 
+      path: /metrics
+      targetPort: 3000
