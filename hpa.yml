@@ -11,8 +11,8 @@ spec:
     kind: Deployment
     name: srjm-qrcode
 
-  minReplicas: 2
-  maxReplicas: 5
+  minReplicas: 1
+  maxReplicas: 3
 
   behavior:
     scaleUp:
