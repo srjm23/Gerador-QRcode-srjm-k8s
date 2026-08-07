@@ -20,7 +20,7 @@ spec:
         app: srjm
     spec:
       containers:
-      - image: srjm2024/gerador-qrcode-srjm:latest-metrics
+      - image: srjm2024/gerador-qrcode-srjm:latest-2.0.0
         name: srjm-qrcode
         ports:
         - containerPort: 3000

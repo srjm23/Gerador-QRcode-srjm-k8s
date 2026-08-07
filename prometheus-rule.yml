@@ -1,0 +1,70 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: srjm-qrcode-prometheusrule
+  namespace: qrcode-system
+  labels:
+    app: srjm
+    prometheus: k8s
+    role: alert-rules
+    app.kubernetes.io/name: kube-prometheus
+    app.kubernetes.io/part-of: kube-prometheus
+spec:
+  groups:
+    - name: srjm-prometheus.rules
+      rules:
+        - alert: HighCPUUsage
+          expr: |
+            (
+              sum by (pod) (
+                rate(container_cpu_usage_seconds_total{
+                  namespace="qrcode-system",
+                  pod=~"srjm-qrcode-.*",
+                  container!="",
+                  image!=""
+                }[5m])
+              )
+              /
+              sum by (pod) (
+                kube_pod_container_resource_limits{
+                  namespace="qrcode-system",
+                  pod=~"srjm-qrcode-.*",
+                  resource="cpu",
+                  unit="core"
+                }
+              )
+            ) > 0.7
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High CPU usage detected on pod {{ $labels.pod }}"
+            description: "Pod {{ $labels.pod }} in namespace qrcode-system is using more than 70% CPU for the last 5 minutes."
+
+        - alert: HighMemoryUsage
+          expr: |
+            (
+              sum by (pod) (
+                container_memory_working_set_bytes{
+                  namespace="qrcode-system",
+                  pod=~"srjm-qrcode-.*",
+                  container!="",
+                  image!=""
+                }
+              )
+              /
+              sum by (pod) (
+                kube_pod_container_resource_limits{
+                  namespace="qrcode-system",
+                  pod=~"srjm-qrcode-.*",
+                  resource="memory",
+                  unit="byte"
+                }
+              )
+            ) > 0.7
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High Memory usage detected on pod {{ $labels.pod }}"
+            description: "Pod {{ $labels.pod }} in namespace qrcode-system is using more than 70% of its memory limit for the last 5 minutes."
