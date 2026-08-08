@@ -46,3 +46,15 @@ spec:
                 kind: Gateway
                 group: gateway.networking.k8s.io
                 sectionName: prometheus-http
+
+      - selector:
+          dnsNames:
+            - vault.geradorqrcode-srjm.uk
+        http01:
+          gatewayHTTPRoute:
+            parentRefs:
+              - name: srjm-gateway-nginx
+                namespace: qrcode-system
+                kind: Gateway
+                group: gateway.networking.k8s.io
+                sectionName: vault-http
