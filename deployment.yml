@@ -24,7 +24,7 @@ spec:
         prometheus.io/port: "3000"
     spec:
       containers:
-      - image: srjm2024/gerador-qrcode-srjm:latest-2.1.0
+      - image: srjm2024/gerador-qrcode-srjm:latest-2.1.1
         imagePullPolicy: Always
         name: srjm-qrcode
         env:
