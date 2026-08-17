@@ -18,10 +18,38 @@ spec:
     metadata:
       labels:
         app: srjm
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: "3000"
     spec:
       containers:
-      - image: srjm2024/gerador-qrcode-srjm:latest-2.0.0
+      - image: srjm2024/gerador-qrcode-srjm:latest-2.1.0
+        imagePullPolicy: Always
         name: srjm-qrcode
+        env:
+        - name: NODE_OPTIONS
+          value: "--require @opentelemetry/auto-instrumentations-node/register"
+        - name: OTEL_SERVICE_NAME
+          value: srjm-qrcode
+        - name: OTEL_EXPORTER_OTLP_PROTOCOL
+          value: http/protobuf
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: http://otel-collector.monitoring.svc.cluster.local:4318
+        - name: OTEL_TRACES_EXPORTER
+          value: otlp
+        - name: OTEL_METRICS_EXPORTER
+          value: none
+        - name: OTEL_LOGS_EXPORTER
+          value: none
+        - name: OTEL_PROPAGATORS
+          value: tracecontext,baggage
+        - name: OTEL_TRACES_SAMPLER
+          value: parentbased_traceidratio
+        - name: OTEL_TRACES_SAMPLER_ARG
+          value: "0.1"
+        - name: OTEL_RESOURCE_ATTRIBUTES
+          value: service.namespace=qrcode-system,deployment.environment.name=production
         ports:
         - containerPort: 3000
         resources:

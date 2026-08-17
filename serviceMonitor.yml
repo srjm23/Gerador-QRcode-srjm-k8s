@@ -1,15 +1,18 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: srjm-qrcode-servicemonitor
-  namespace: qrcode-system
+  name: otel-collector
+  namespace: monitoring
   labels:
-    app: srjm
+    app.kubernetes.io/name: otel-collector
 spec:
   selector:
     matchLabels:
-      app: srjm
+      app.kubernetes.io/name: otel-collector
   endpoints:
     - interval: 30s
       path: /metrics
-      port: http
+      port: prometheus
+    - interval: 30s
+      path: /metrics
+      port: telemetry
