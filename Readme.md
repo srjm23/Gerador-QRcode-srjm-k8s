@@ -59,6 +59,7 @@ do tipo `RollingUpdate`.
 | `tempo/persistent-volume-claim.yml` | Reserva 10 Gi persistentes para os traces |
 | `tempo/deployment.yml` | Executa o backend Grafana Tempo em modo monolítico |
 | `tempo/service.yml` | Expõe a API de consulta e os receivers OTLP do Tempo no cluster |
+| `elastic/stack.yml` | Executa Elasticsearch, Kibana e Filebeat com retenção de logs por 7 dias |
 | `gateway.yml` | Define os listeners HTTP/HTTPS da aplicação e do Argo CD |
 | `http-route.yml` | Encaminha o domínio principal para a aplicação |
 | `argocd-route/httproute-argocd.yml` | Encaminha o subdomínio do Argo CD para `argocd-server` |
