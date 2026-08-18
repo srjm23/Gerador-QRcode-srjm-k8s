@@ -43,6 +43,10 @@ metadata:
 spec:
   version: 9.4.3
   count: 1
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
   elasticsearchRef:
     name: logs
   podTemplate:
